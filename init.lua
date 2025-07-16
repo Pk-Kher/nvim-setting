@@ -151,7 +151,10 @@ vim.o.splitbelow = true
 --   and `:help lua-options-guide`
 vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-vim.o.tabstop = 4
+vim.o.expandtab = true          -- insert spaces instead of tabs
+vim.o.tabstop = 4               -- how a tab *looks*
+vim.o.softtabstop = 4           -- insert 2 spaces on tab press 😠
+vim.o.shiftwidth = 4            -- also indent by 2 😠
 
 -- open terminal
 vim.keymap.set("n", "<leader>ds", function()
@@ -254,6 +257,20 @@ function R(name)
     require("plenary.reload").reload_module(name)
 end
 
+-- fold unfold function
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false -- keep all open by default
+vim.opt.foldlevel = 99
+
+--Duplicate current line
+vim.keymap.set("n", "<C-D>", "yyp", {
+  noremap = true,
+  silent = true,
+  desc = "Duplicate current line"
+})
+-- word wrap off
+vim.opt.wrap = false
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -553,6 +570,7 @@ require("lazy").setup({
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
+
 					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 					-- to define small helper and utility functions so you don't have to repeat yourself.
 					--
