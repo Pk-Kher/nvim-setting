@@ -1,3 +1,5 @@
+rm -rf ~/.local/share/nvim
+https://chatgpt.com/share/687b66ca-0200-8000-b1d7-440005a0b7e1 -fixed lua-rocks error
 3 modes
 - normal - ctrl+c
 - visual -  
@@ -13,6 +15,15 @@ l -> right
 - Just a single "p" (for paste).
 - cut using "d"
 
+
+press "/" normal mode
+    /mySearchText
+    n	Jump to the next match (forward)
+    N	Jump to the previous match (backward)
+    :noh + <Enter>	Clear the highlights (nohlsearch)
+    ?mySearchText	Search backward instead of forward
+
+
 search in file "leader+/" then type
 global search leader+sg
 find and replace
@@ -24,12 +35,15 @@ gi - Case-Insensitive
 - b/B (back) to jump to the beginning of a word backwards
 - e/E (end) to jump to the end of a word
 - ge/gE to jump to the end of a word
+- $ to end of line
 
 leader+sf search file
 leader+sr search where you left off
 leader+space buffer file
 leader+ds open terminal or cmd
 exit "ctrl+\+n"
+<leader>pws Search current cursor word
+
 
 Ctrl + W	Delete previous word
 Ctrl + U	Delete everything before cursor on the line
@@ -83,3 +97,6 @@ ctrl+b then c create new terminal
 ctrl+b then 1-2-3-4 navigate between terminal
 
 ctrl+b then "[" to enter select mode "q" for normal
+
+
+

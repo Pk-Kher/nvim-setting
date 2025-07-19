@@ -154,7 +154,8 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.o.expandtab = true          -- insert spaces instead of tabs
 vim.o.tabstop = 4               -- how a tab *looks*
 vim.o.softtabstop = 4           -- insert 2 spaces on tab press 😠
-vim.o.shiftwidth = 4            -- also indent by 2 😠
+vim.o.shiftwidth = 4   
+vim.opt.smartindent = true    
 
 -- open terminal
 vim.keymap.set("n", "<leader>ds", function()
@@ -288,6 +289,27 @@ function ColorMyPencils(color)
 	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
+-- custom changes
+-- vim.opt.guicursor = "" --cursor wil not change on insert mode
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+vim.opt.termguicolors = true
+
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+
+vim.opt.updatetime = 50
+
+-- vim.opt.colorcolumn = "80"
+
+
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
@@ -480,7 +502,16 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-
+			vim.keymap.set('n', '<C-p>', builtin.git_files, {desc = " Search Git Files"})
+			vim.keymap.set('n', '<leader>pws', function()
+				local word = vim.fn.expand("<cword>")
+				builtin.grep_string({ search = word })
+			end,{ desc = "Search current cursor word" })
+			vim.keymap.set('n', '<leader>pWs', function()
+				local word = vim.fn.expand("<cWORD>")
+				builtin.grep_string({ search = word })
+			end)
+			vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
 				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
@@ -545,6 +576,10 @@ require("lazy").setup({
 			"saadparwaiz1/cmp_luasnip",
 		},
 		config = function()
+			require("conform").setup({
+				formatters_by_ft = {
+				}
+			})
 			-- Brief aside: **What is LSP?**
 			--
 			-- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -805,11 +840,11 @@ require("lazy").setup({
 				automatic_installation = false,
 				handlers = {
 					function(server_name)
-						local server = servers[server_name] or {}
+						----i-- local server = servers[server_name] or {}
 						-- This handles overriding only values explicitly passed
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for ts_ls)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						----i-- server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						-- require("lspconfig")[server_name].setup(server)
 						require("lspconfig")[server_name].setup {
                         capabilities = capabilities
@@ -1196,7 +1231,7 @@ require("lazy").setup({
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
-        "rust",
+        		"rust",
 				"typescript",
 				"javascript",
 				"go",
@@ -1236,12 +1271,19 @@ require("lazy").setup({
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 		require("treesitter-context").setup({
-			enable = true,
-			throttle = true,
-			max_lines = 5,
-			trim_scope = "outer",
-			mode = "cursor",
-			separator = nil,
+			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+                multiwindow = false, -- Enable multiwindow support.
+                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+                min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+                line_numbers = true,
+                multiline_threshold = 20, -- Maximum number of lines to show for a single context
+                trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+                mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+                -- Separator between context and content. Should be a single character string, like '-'.
+                -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+                separator = nil,
+                zindex = 20, -- The Z-index of the context window
+                on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 		})
 		end,
 	},
@@ -1275,12 +1317,12 @@ require("lazy").setup({
 
 	--  this my personal that added after kicks
 	-- for auto complite
- 	-- {
-    --   "supermaven-inc/supermaven-nvim",
-    --   config = function()
-    --     require("supermaven-nvim").setup({})
-    --   end,
-    -- },
+ 	{
+      "supermaven-inc/supermaven-nvim",
+      config = function()
+        require("supermaven-nvim").setup({})
+      end,
+    },
 	
 	{
 		"ThePrimeagen/harpoon",
@@ -1323,25 +1365,55 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"copilotlsp-nvim/copilot-lsp",
-		init = function()
-			vim.g.copilot_nes_debounce = 500
-			vim.lsp.enable("copilot")
-			vim.keymap.set("n", "<tab>", function()
-            -- Try to jump to the start of the suggestion edit.
-            -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
-				local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
-					or (
-						require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit()
-					)
+		"mbbill/undotree",
+		config = function() 
+			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle,{ desc = "did you fucked up need to see changes" })
+		end
+	},
+	{
+		"folke/zen-mode.nvim",
+		config = function()
+			vim.keymap.set("n", "<leader>zz", function()
+				require("zen-mode").setup {
+					window = {
+						width = 90,
+						options = { }
+					},
+				}
+				require("zen-mode").toggle()
+				vim.wo.wrap = false
+				vim.wo.number = true
+				vim.wo.rnu = true
+				ColorMyPencils()
 			end)
-			vim.keymap.set("n", "<esc>", function()
-				if not require('copilot-lsp.nes').clear() then
-					-- fallback to other functionality
-				end
-			end, { desc = "Clear Copilot suggestion or fallback" })
-		end,
-	}
+
+
+			vim.keymap.set("n", "<leader>zZ", function()
+				require("zen-mode").setup {
+					window = {
+						width = 80,
+						options = { }
+					},
+				}
+				require("zen-mode").toggle()
+				vim.wo.wrap = false
+				vim.wo.number = false
+				vim.wo.rnu = false
+				vim.opt.colorcolumn = "0"
+				ColorMyPencils()
+			end)
+		end
+	},
+-- 	{
+-- 	"copilotlsp-nvim/copilot-lsp",
+-- 	init = function()
+-- 		vim.g.copilot_nes_debounce = 500
+-- 		vim.lsp.enable("copilot")
+-- 		vim.keymap.set("n", "<tab>", function()
+-- 			require("copilot-lsp.nes").apply_pending_nes()
+-- 		end)
+-- 	end,
+-- }
 
 }, {
 	ui = {
