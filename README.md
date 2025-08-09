@@ -1,5 +1,5 @@
 rm -rf ~/.local/share/nvim
-https://chatgpt.com/share/687b66ca-0200-8000-b1d7-440005a0b7e1 -fixed lua-rocks error
+
 3 modes
 - normal - ctrl+c
 - visual -  
@@ -42,8 +42,6 @@ leader+sr search where you left off
 leader+space buffer file
 leader+ds open terminal or cmd
 exit "ctrl+\+n"
-<leader>pws Search current cursor word
-
 
 Ctrl + W	Delete previous word
 Ctrl + U	Delete everything before cursor on the line
@@ -90,13 +88,15 @@ gri - goto file definition
 
 grn - rename variable
 
+In Vim, you can delete all text inside quotes ("") or curly braces ({}) using the "text object" commands.
+-di"
+-di{
+-di'
 
+-da" -delete with "
 <!-- tmux -->
 
 ctrl+b then c create new terminal
 ctrl+b then 1-2-3-4 navigate between terminal
 
 ctrl+b then "[" to enter select mode "q" for normal
-
-
-
