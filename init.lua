@@ -316,6 +316,7 @@ vim.keymap.set("n", "<C-k>", function()
 end, { desc = "Show diagnostic under cursor" })
 
 
+
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
@@ -780,14 +781,14 @@ require("lazy").setup({
         ["typescript-language-server"] = {},
         gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
         --
 
         lua_ls = {
@@ -1148,7 +1149,7 @@ require("lazy").setup({
         require("tokyonight").setup({
           -- your configuration comes here
           -- or leave it empty to use the default settings
-          style = "storm",   -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+          style = "",   -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
           transparent = true, -- Enable this to disable setting the background color
           terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
           styles = {

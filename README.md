@@ -94,9 +94,60 @@ In Vim, you can delete all text inside quotes ("") or curly braces ({}) using th
 -di'
 
 -da" -delete with "
+
+
+-Jumping to specific locations:
+    -gg: Moves the cursor to the first line of the file.
+    -G: Moves the cursor to the last line of the file.
+    -[number]G: Moves the cursor to the specified line number.
+    -/pattern: Searches for a pattern and moves the cursor to the first match.
+- Ctrl-u: Scrolls the screen up half a page.
+- Ctrl-f: Scrolls the screen down a full page.
+
+- Ctrl w v split line vertical ans s for horizontal
+- <C-^> to move prev file
+-  ctrl q quick fix list :cnext :cprev you can bind with C-j and C-k
+
+- For most common multi-line edits (like commenting/uncommenting, adding characters, etc.), Visual Block (Ctrl+v) + I/A + Esc is the fastest.
+- Press Shift+V to select whole lines.
+
+- new file using :new
+- new file verical :vnew
+- save file :w path/to/file.txt
+
 <!-- tmux -->
 
 ctrl+b then c create new terminal
 ctrl+b then 1-2-3-4 navigate between terminal
 
 ctrl+b then "[" to enter select mode "q" for normal
+<!-- file $HOME/.tmux.conf -->
+```bash
+set -g base-index 1
+# Enable true color support
+set-option -ga terminal-overrides ",xterm-256color:Tc"
+
+set -g status-bg '#302D47'
+set -g status-fg '#348CAF'
+
+# (Optional) Let Tmux use your system clipboard
+set-option -g set-clipboard on
+
+set -g status-right "%I:%M %p | %Y-%m-%d"
+```
+<!-- zch with ohmyzch -->
+- how can you install zch
+```bash
+1. sudo apt install zch -y
+2. zch --version
+3. chsh -s $(which zch) <!-- to tell which cmd you want to use --> 
+4. sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+```
+- config file name is $HOME/.zchrc
+- to source any file you need to type command "source ~/.zchrc"
+
+
+
+
+
+
