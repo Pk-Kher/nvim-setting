@@ -117,10 +117,17 @@ In Vim, you can delete all text inside quotes ("") or curly braces ({}) using th
 
 <!-- tmux -->
 
-ctrl+b then c create new terminal
-ctrl+b then 1-2-3-4 navigate between terminal
+- ctrl+b then c create new terminal
+- ctrl+b then 1-2-3-4 navigate between terminal
 
-ctrl+b then "[" to enter select mode "q" for normal
+- ctrl+b then "[" to enter select mode "q" for normal
+- ctrl+b d to detach from session
+- tmux attach -t my_session_name
+- ctrl+b " to list sessions
+- ctrl+b $ to rename session
+- ctrl+b : to change session
+- ctrl+b ? to list shortcuts
+
 <!-- file $HOME/.tmux.conf -->
 ```bash
 set -g base-index 1
@@ -145,8 +152,23 @@ set -g status-right "%I:%M %p | %Y-%m-%d"
 ```
 - config file name is $HOME/.zchrc
 - to source any file you need to type command "source ~/.zchrc"
+- you might need to move your path from .bashrc to .zchrc
+```bash
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"       # Loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Optional: bash completion for nvm
 
+# Rust (Cargo)
+. "$HOME/.cargo/env"
 
+# Opencode custom tool (keep this if you use it)
+export PATH=/home/kanhasoft-026/.opencode/bin:$PATH
+```
+
+<!-- ShowMeTheKey -->
+install manually in ubuntu
+showmethekey-gtk
 
 
 

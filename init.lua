@@ -316,7 +316,6 @@ vim.keymap.set("n", "<C-k>", function()
 end, { desc = "Show diagnostic under cursor" })
 
 
-
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
@@ -371,7 +370,7 @@ require("lazy").setup({
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  {                   -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     "folke/which-key.nvim",
     event = "VimEnter", -- Sets the loading event to 'VimEnter'
     opts = {
@@ -422,6 +421,23 @@ require("lazy").setup({
         { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
       },
     },
+    config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
+
+      -- disable/enable commands
+      vim.api.nvim_create_user_command("WhichKeyDisable", function()
+        wk.setup({})
+        vim.g.which_key_disabled = true
+        print("which-key disabled")
+      end, {})
+
+      vim.api.nvim_create_user_command("WhichKeyEnable", function()
+        wk.setup(opts)
+        vim.g.which_key_disabled = false
+        print("which-key enabled")
+      end, {})
+    end,
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -1134,7 +1150,7 @@ require("lazy").setup({
           invert_tabline = false,
           invert_intend_guides = false,
           inverse = true, -- invert background for search, diffs, statuslines and errors
-          contrast = "", -- can be "hard", "soft" or empty string
+          contrast = "",  -- can be "hard", "soft" or empty string
           palette_overrides = {},
           overrides = {},
           dim_inactive = false,
@@ -1149,8 +1165,8 @@ require("lazy").setup({
         require("tokyonight").setup({
           -- your configuration comes here
           -- or leave it empty to use the default settings
-          style = "",   -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-          transparent = true, -- Enable this to disable setting the background color
+          style = "",             -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+          transparent = true,     -- Enable this to disable setting the background color
           terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
           styles = {
             -- Style to be applied to different syntax groups
@@ -1159,7 +1175,7 @@ require("lazy").setup({
             keywords = { italic = false },
             -- Background styles. Can be "dark", "transparent" or "normal"
             sidebars = "dark", -- style for sidebars, see below
-            floats = "dark", -- style for floating windows
+            floats = "dark",   -- style for floating windows
           },
         })
       end
@@ -1275,19 +1291,19 @@ require("lazy").setup({
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       require("treesitter-context").setup({
-        enable = true,                    -- Enable this plugin (Can be enabled/disabled later via commands)
-        multiwindow = false,              -- Enable multiwindow support.
-        max_lines = 0,                    -- How many lines the window should span. Values <= 0 mean no limit.
-        min_window_height = 0,            -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
+        multiwindow = false,      -- Enable multiwindow support.
+        max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
+        min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
         line_numbers = true,
-        multiline_threshold = 20,         -- Maximum number of lines to show for a single context
-        trim_scope = 'outer',             -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        mode = 'cursor',                  -- Line used to calculate context. Choices: 'cursor', 'topline'
+        multiline_threshold = 20, -- Maximum number of lines to show for a single context
+        trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
         -- Separator between context and content. Should be a single character string, like '-'.
         -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
         separator = nil,
-        zindex = 20,             -- The Z-index of the context window
-        on_attach = nil,         -- (fun(buf: integer): boolean) return false to disable attaching
+        zindex = 20,     -- The Z-index of the context window
+        on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
       })
     end,
   },
@@ -1365,8 +1381,8 @@ require("lazy").setup({
         harpoon:list():replace_at(5)
       end, { desc = "Harpoon: replace at position 5" })
       vim.keymap.set("n", "<leader>^", function()
-				harpoon:list():replace_at(6)
-			end,{desc = "Harpoon: replace at position 6"})
+        harpoon:list():replace_at(6)
+      end, { desc = "Harpoon: replace at position 6" })
       keymap("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon: File 1" })
       keymap("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon: File 2" })
       keymap("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: File 3" })
@@ -1448,5 +1464,6 @@ require("lazy").setup({
   },
 })
 
+require("thinking").setup()
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
