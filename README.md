@@ -162,13 +162,22 @@ export NVM_DIR="$HOME/.nvm"
 # Rust (Cargo)
 . "$HOME/.cargo/env"
 
+
 # Opencode custom tool (keep this if you use it)
 export PATH=/home/kanhasoft-026/.opencode/bin:$PATH
+
 ```
+- zsh-autosuggestions // use this to auto complete for zsh
+
 
 <!-- ShowMeTheKey -->
 install manually in ubuntu
 showmethekey-gtk
+
+
+<!-- "tonsky / FiraCode" -->
+use this font
+
 
 
 
