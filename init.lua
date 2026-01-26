@@ -315,6 +315,14 @@ vim.keymap.set("n", "<C-k>", function()
   vim.diagnostic.open_float(nil, { focus = false })
 end, { desc = "Show diagnostic under cursor" })
 
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Move line down", silent = true })
+
+-- tmux sessionizer
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+vim.keymap.set("n", "<M-h>", "<cmd>silent !tmux neww tmux-sessionizer -s 0<CR>")
+vim.keymap.set("n", "<M-t>", "<cmd>silent !tmux neww tmux-sessionizer -s 1<CR>")
+vim.keymap.set("n", "<M-n>", "<cmd>silent !tmux neww tmux-sessionizer -s 2<CR>")
+vim.keymap.set("n", "<M-s>", "<cmd>silent !tmux neww tmux-sessionizer -s 3<CR>")
 
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
@@ -780,7 +788,7 @@ require("lazy").setup({
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      -- local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -938,7 +946,7 @@ require("lazy").setup({
           focusable = false,
           style = "minimal",
           border = "rounded",
-          source = "always",
+          source = "if_many",
           header = "",
           prefix = "",
         },
@@ -1397,40 +1405,40 @@ require("lazy").setup({
       vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "did you fucked up need to see changes" })
     end
   },
-  {
-    "folke/zen-mode.nvim",
-    config = function()
-      vim.keymap.set("n", "<leader>zz", function()
-        require("zen-mode").setup {
-          window = {
-            width = 90,
-            options = {}
-          },
-        }
-        require("zen-mode").toggle()
-        vim.wo.wrap = false
-        vim.wo.number = true
-        vim.wo.rnu = true
-        ColorMyPencils()
-      end)
-
-
-      vim.keymap.set("n", "<leader>zZ", function()
-        require("zen-mode").setup {
-          window = {
-            width = 80,
-            options = {}
-          },
-        }
-        require("zen-mode").toggle()
-        vim.wo.wrap = false
-        vim.wo.number = false
-        vim.wo.rnu = false
-        vim.opt.colorcolumn = "0"
-        ColorMyPencils()
-      end)
-    end
-  },
+  -- {
+  --   "folke/zen-mode.nvim",
+  --   config = function()
+  --     vim.keymap.set("n", "<leader>zz", function()
+  --       require("zen-mode").setup {
+  --         window = {
+  --           width = 90,
+  --           options = {}
+  --         },
+  --       }
+  --       require("zen-mode").toggle()
+  --       vim.wo.wrap = false
+  --       vim.wo.number = true
+  --       vim.wo.rnu = true
+  --       ColorMyPencils()
+  --     end)
+  --
+  --
+  --     vim.keymap.set("n", "<leader>zZ", function()
+  --       require("zen-mode").setup {
+  --         window = {
+  --           width = 80,
+  --           options = {}
+  --         },
+  --       }
+  --       require("zen-mode").toggle()
+  --       vim.wo.wrap = false
+  --       vim.wo.number = false
+  --       vim.wo.rnu = false
+  --       vim.opt.colorcolumn = "0"
+  --       ColorMyPencils()
+  --     end)
+  --   end
+  -- },
   -- 	{
   -- 	"copilotlsp-nvim/copilot-lsp",
   -- 	init = function()
@@ -1464,6 +1472,6 @@ require("lazy").setup({
   },
 })
 
-require("thinking").setup()
+-- require("thinking").setup()
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

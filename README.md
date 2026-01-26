@@ -1,4 +1,5 @@
 rm -rf ~/.local/share/nvim
+:so in vim to source the init.lua
 
 3 modes
 - normal - ctrl+c
@@ -23,6 +24,15 @@ press "/" normal mode
     :noh + <Enter>	Clear the highlights (nohlsearch)
     ?mySearchText	Search backward instead of forward
 
+find in the current line use fFtT
+f{char}  → move cursor forward and land ON the next {char}
+t{char}  → move cursor forward and stop BEFORE the next {char}
+
+F{char}  → move cursor backward and land ON the previous {char}
+T{char}  → move cursor backward and stop AFTER the previous {char}
+
+;  → repeat last f/t/F/T in same direction
+,  → repeat last f/t/F/T in opposite direction
 
 search in file "leader+/" then type
 global search leader+sg
@@ -36,6 +46,16 @@ gi - Case-Insensitive
 - e/E (end) to jump to the end of a word
 - ge/gE to jump to the end of a word
 - $ to end of line
+ex:2
+"AWS_REGION": "asdf",
+:'<,'>s/:\s*".*"/: "string"/g
+: → matches the key/value separator
+\s* → allows optional spaces
+".*" → matches any existing string value
+: "string" → replaces only the value
+'<,'> → limits replacement to the selected area
+
+
 
 leader+sf search file
 leader+sr search where you left off
@@ -94,6 +114,8 @@ In Vim, you can delete all text inside quotes ("") or curly braces ({}) using th
 -di'
 
 -da" -delete with "
+- normal mode "ct <any text>" it will delete and put you in the insert mode
+- normal mode "23d" it will delete from line current cursor to line 23
 
 
 -Jumping to specific locations:
@@ -114,6 +136,10 @@ In Vim, you can delete all text inside quotes ("") or curly braces ({}) using th
 - new file using :new
 - new file verical :vnew
 - save file :w path/to/file.txt
+
+
+
+
 
 <!-- tmux -->
 
@@ -178,7 +204,17 @@ showmethekey-gtk
 <!-- "tonsky / FiraCode" -->
 use this font
 
+<!-- doom -->
+1. Don't forget to run 'doom sync' and restart Emacs after modifying init.el or 
+   packages.el in ~/.config/doom. This is never necessary for config.el.
 
+2. If something goes wrong, run `doom doctor` to diagnose common issues with
+   your environment, setup, and config. 
 
+3. Use 'doom upgrade' to update Doom. Doing it any other way will require
+   additional steps (see 'doom help upgrade').
+
+4. Access Doom's documentation from within Emacs via 'SPC h d h' or 'C-h d h'
+   (or 'M-x doom/help').
 
 
