@@ -139,61 +139,11 @@ In Vim, you can delete all text inside quotes ("") or curly braces ({}) using th
 
 
 
-
-
-<!-- tmux -->
-
-- ctrl+b then c create new terminal
-- ctrl+b then 1-2-3-4 navigate between terminal
-
-- ctrl+b then "[" to enter select mode "q" for normal
-- ctrl+b d to detach from session
-- tmux attach -t my_session_name
-- ctrl+b " to list sessions
-- ctrl+b $ to rename session
-- ctrl+b : to change session
-- ctrl+b ? to list shortcuts
-
-<!-- file $HOME/.tmux.conf -->
-```bash
-set -g base-index 1
-# Enable true color support
-set-option -ga terminal-overrides ",xterm-256color:Tc"
-
-set -g status-bg '#302D47'
-set -g status-fg '#348CAF'
-
-# (Optional) Let Tmux use your system clipboard
-set-option -g set-clipboard on
-
-set -g status-right "%I:%M %p | %Y-%m-%d"
-```
-<!-- zch with ohmyzch -->
-- how can you install zch
-```bash
-1. sudo apt install zch -y
-2. zch --version
-3. chsh -s $(which zch) <!-- to tell which cmd you want to use --> 
-4. sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
-```
-- config file name is $HOME/.zchrc
-- to source any file you need to type command "source ~/.zchrc"
-- you might need to move your path from .bashrc to .zchrc
-```bash
-# NVM (Node Version Manager)
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"       # Loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # Optional: bash completion for nvm
-
-# Rust (Cargo)
-. "$HOME/.cargo/env"
-
-
-# Opencode custom tool (keep this if you use it)
-export PATH=/home/kanhasoft-026/.opencode/bin:$PATH
-
-```
+- ohmyzsh use instead of bash
+- tmux use for multiple terminal
 - zsh-autosuggestions // use this to auto complete for zsh
+- use opencode for the agent
+- use fzf for the search
 
 
 <!-- ShowMeTheKey -->
@@ -204,17 +154,5 @@ showmethekey-gtk
 <!-- "tonsky / FiraCode" -->
 use this font
 
-<!-- doom -->
-1. Don't forget to run 'doom sync' and restart Emacs after modifying init.el or 
-   packages.el in ~/.config/doom. This is never necessary for config.el.
-
-2. If something goes wrong, run `doom doctor` to diagnose common issues with
-   your environment, setup, and config. 
-
-3. Use 'doom upgrade' to update Doom. Doing it any other way will require
-   additional steps (see 'doom help upgrade').
-
-4. Access Doom's documentation from within Emacs via 'SPC h d h' or 'C-h d h'
-   (or 'M-x doom/help').
 
 
