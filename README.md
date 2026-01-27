@@ -151,8 +151,7 @@ install manually in ubuntu
 showmethekey-gtk
 
 
-<!-- "tonsky / FiraCode" -->
-use this font
+tonsky / FiraCode use this font
 
 
 
